@@ -51,27 +51,31 @@ void loop(void){
   unsigned long now = millis();
   if (now - lastMsg > interval) {
     lastMsg = now;
+    read_sensor_and_publish_message();
+  }
+}
 
+void read_sensor_and_publish_message() {
     sensors.requestTemperatures();
     float t = sensors.getTempCByIndex(0);
 
-    StaticJsonDocument<200> doc;
-    doc["up"] = millis();
-    doc["id"] = deviceId;
-
+    StaticJsonDocument<200> message;
+    message["up"] = millis();
+    message["id"] = deviceId;
+  
     StaticJsonDocument<200> data;
     data["type"] = "temp";
     data["val"] = t;
     data["pin"] = ONE_WIRE_BUS;
-
-    doc["data"] = data;
-
+  
+    message["data"] = data;
+    
     char jsonBuffer[512];
-    serializeJson(doc, jsonBuffer);
+    serializeJson(message, jsonBuffer);
     client.publish(topic, jsonBuffer);
 
     char prettyJson[512];
-    serializeJsonPretty(doc, prettyJson);
+    serializeJsonPretty(message, prettyJson);
 
     Serial.print("Publish message to topic ");
     Serial.print(topic);
@@ -79,7 +83,6 @@ void loop(void){
     Serial.println(prettyJson);
 
     Serial.println("-------------");
-  }
 }
 
 void setup_wifi() {
