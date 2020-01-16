@@ -47,6 +47,10 @@ void setup(void) {
   }
 
   read_sensor_and_publish_message();
+
+  delay(20);
+  Serial.println("Going to sleep.");
+  ESP.deepSleep(300e6);
 }
 
 void loop(void){}

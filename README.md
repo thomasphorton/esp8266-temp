@@ -7,4 +7,5 @@ The sketch will:
   * connect to an MQTT broker
   * take a measurement
   * publish a message
+  * sleep for 5 minutes and restart
 
