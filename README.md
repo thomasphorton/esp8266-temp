@@ -5,7 +5,6 @@ The sketch will:
 * setup:
   * connect to WiFi
   * connect to an MQTT broker
-* loop:
   * take a measurement
   * publish a message
 

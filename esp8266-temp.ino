@@ -41,19 +41,15 @@ void setup(void) {
 
   setup_wifi();
   client.setServer(broker, port);
-}
 
-void loop(void){
   if (!client.connected()) {
     reconnect();
   }
 
-  unsigned long now = millis();
-  if (now - lastMsg > interval) {
-    lastMsg = now;
-    read_sensor_and_publish_message();
-  }
+  read_sensor_and_publish_message();
 }
+
+void loop(void){}
 
 void read_sensor_and_publish_message() {
     sensors.requestTemperatures();
